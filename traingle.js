@@ -47,12 +47,16 @@ document.addEventListener("touchstart", (event) => {
 document.addEventListener("touchmove", (event) => {
     if (isTouching && event.touches.length > 0) {
         let touch = event.touches[0];
+
+        // Calculate the difference in touch positions
         let deltaX = (touch.clientX - prevTouchX) * 0.01;
         let deltaY = (touch.clientY - prevTouchY) * 0.01;
 
-        triangle.rotation.y += deltaX; // Rotate based on touch X
-        triangle.rotation.x += deltaY; // Rotate based on touch Y
+        // Update the rotation of the triangle
+        triangle.rotation.y += deltaX;
+        triangle.rotation.x += deltaY;
 
+        // Update the previous touch positions for the next move
         prevTouchX = touch.clientX;
         prevTouchY = touch.clientY;
     }
