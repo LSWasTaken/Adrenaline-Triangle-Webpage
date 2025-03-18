@@ -51,14 +51,18 @@ document.addEventListener('mouseup', () => {
   isDragging = false;
 });
 
-// Touch Interaction (Move triangle by touch)
+// Touch Interaction (Rotate triangle by touch)
 document.addEventListener("touchmove", (event) => {
     if (event.touches.length > 0) {
         let touch = event.touches[0];
-        let x = (touch.clientX / window.innerWidth) * 2 - 1;
-        let y = -(touch.clientY / window.innerHeight) * 2 + 1;
-        triangle.position.x = x * 2; // Adjust sensitivity if needed
-        triangle.position.y = y * 2;
+        let deltaX = (touch.clientX - prevMouseX) * 0.01;
+        let deltaY = (touch.clientY - prevMouseY) * 0.01;
+
+        triangle.rotation.y += deltaX;
+        triangle.rotation.x += deltaY;
+
+        prevMouseX = touch.clientX;
+        prevMouseY = touch.clientY;
     }
 });
 
