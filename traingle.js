@@ -17,10 +17,15 @@ scene.add(triangle);
 // Camera position
 camera.position.z = 4;
 
+// Variables for touch interaction
+let isTouching = false;
+let prevTouchX = 0;
+let prevTouchY = 0;
+
 // Animation loop
 function animate() {
     requestAnimationFrame(animate);
-    triangle.rotation.y += 0.02;
+    triangle.rotation.y += 0.02; // Continuous rotation
     triangle.rotation.x += 0.01;
     renderer.render(scene, camera);
 }
@@ -30,15 +35,31 @@ document.addEventListener("mousemove", () => {
     triangle.material.color.set(Math.random() * 0xffffff);
 });
 
-// Touch Interaction (Move triangle by touch)
-document.addEventListener("touchmove", (event) => {
+// Touch Interaction (Rotate triangle by touch)
+document.addEventListener("touchstart", (event) => {
     if (event.touches.length > 0) {
-        let touch = event.touches[0];
-        let x = (touch.clientX / window.innerWidth) * 2 - 1;
-        let y = -(touch.clientY / window.innerHeight) * 2 + 1;
-        triangle.position.x = x * 2; // Adjust sensitivity if needed
-        triangle.position.y = y * 2;
+        prevTouchX = event.touches[0].clientX;
+        prevTouchY = event.touches[0].clientY;
+        isTouching = true;
     }
+});
+
+document.addEventListener("touchmove", (event) => {
+    if (isTouching && event.touches.length > 0) {
+        let touch = event.touches[0];
+        let deltaX = (touch.clientX - prevTouchX) * 0.01;
+        let deltaY = (touch.clientY - prevTouchY) * 0.01;
+
+        triangle.rotation.y += deltaX; // Rotate based on touch X
+        triangle.rotation.x += deltaY; // Rotate based on touch Y
+
+        prevTouchX = touch.clientX;
+        prevTouchY = touch.clientY;
+    }
+});
+
+document.addEventListener("touchend", () => {
+    isTouching = false; // End of touch interaction
 });
 
 // Window Resize Handling
