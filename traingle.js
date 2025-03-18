@@ -48,15 +48,15 @@ document.addEventListener("touchmove", (event) => {
     if (isTouching && event.touches.length > 0) {
         let touch = event.touches[0];
 
-        // Calculate the difference in touch positions
+        // Calculate the difference in touch positions (delta)
         let deltaX = (touch.clientX - prevTouchX) * 0.01;
         let deltaY = (touch.clientY - prevTouchY) * 0.01;
 
-        // Update the rotation of the triangle
-        triangle.rotation.y += deltaX;
-        triangle.rotation.x += deltaY;
+        // Apply rotation based on touch movement (rotation around Y and X axes)
+        triangle.rotation.y += deltaX; // Rotate based on horizontal swipe
+        triangle.rotation.x += deltaY; // Rotate based on vertical swipe
 
-        // Update the previous touch positions for the next move
+        // Update the previous touch coordinates
         prevTouchX = touch.clientX;
         prevTouchY = touch.clientY;
     }
