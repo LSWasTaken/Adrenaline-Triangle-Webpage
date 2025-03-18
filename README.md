@@ -1,2 +1,2 @@
 # Adrenaline-Triangle-Webpage
-Tang ina mo OLHRS
+Fuck the school
